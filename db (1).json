@@ -1,0 +1,323 @@
+{
+    "domain": [
+       {
+           "domainName":"Colleges",
+           "factTableName":"collegeFactTable"
+       },
+       {
+        "domainName":"Automobiles",
+        "factTableName":"autoFactTable"
+    }  
+    ],
+
+    "searchQuestions": [
+        {
+            "domainName":"Automobiles",
+            "propertyName":"age",
+            "propertyQuestion":"What age cars are you considering?",
+            "displayorder":	4,
+            "propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles",
+            "propertyName":"bodyStyle",
+            "propertyQuestion":"Which body styles are you considering?",
+            "displayorder":2,
+            "propertyDisplayType":"multiselect"
+
+        },
+        {
+            "domainName":"Automobiles",
+            "propertyName":"color",
+            "propertyQuestion":"What exterior color do you prefer?",
+            "displayorder":8,
+            "propertyDisplayType":"select"
+        },
+        {
+            "domainName":"Automobiles",
+            "propertyName":"fuelType",
+            "propertyQuestion":"What fuel type do you prefer?",
+            "displayorder":12,
+            "propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Automobiles",
+            "propertyName":"luxurySeats",
+            "propertyQuestion":"Do you need Luxury Seats?",
+            "displayorder":10,
+            "propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles",
+            "propertyName":"make",
+            "propertyQuestion":"Which manufacturer are you considering?",
+            "displayorder":3,
+            "propertyDisplayType":"multiselect"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"mileage","propertyQuestion":"What mileage are you looking for?","displayorder":7,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"priceRange","propertyQuestion":"What price range are you looking for?","displayorder":5,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"sellerType","propertyQuestion":"Which sellers do you prefer?","displayorder":6,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"sunroof","propertyQuestion":"Do you need a Sunroof?","displayorder":9,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"transmission","propertyQuestion":"What transmission do you prefer?","displayorder":11,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Automobiles","propertyName":"usedOrNew","propertyQuestion":"Which cars are you interested in?","displayorder":1,"propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Colleges","propertyName":"collegeAge","propertyQuestion":"Is college age of any concern to you?","displayorder":13,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"collegeRanking","propertyQuestion":"What ranking of schools are you searching for?","displayorder":9,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"collegeSize","propertyQuestion":"What size college are you interested in?","displayorder":7,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"collegeType","propertyQuestion":"What type of college are you interested in?","displayorder":6,"propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Colleges","propertyName":"cost","propertyQuestion":"What tuitions are you comfortable with?","displayorder":12,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"focus","propertyQuestion":"Are you interested in schools with a specific focus?","displayorder":4,"propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Colleges","propertyName":"publicOrPrivate","propertyQuestion":"Do you like to attend a public or private university?","displayorder":1,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"region","propertyQuestion":"What region of the country do you prefer?","displayorder":2,"propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Colleges","propertyName":"SATAvg","propertyQuestion":"What SAT Average school are you looking for?","displayorder":8,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"setting","propertyQuestion":"In what kind of setting are you interested?","displayorder":5,"propertyDisplayType":"checkbox"
+        },
+        {
+            "domainName":"Colleges","propertyName":"sportsTradition","propertyQuestion":"Is collegiate sports tradition of interest to you?","displayorder":10,"propertyDisplayType":"radio"
+        },
+        {
+            "domainName":"Colleges","propertyName":"state","propertyQuestion":"What state of the country do you prefer?","displayorder":3,"propertyDisplayType":"multiselect"
+        },
+        {
+            "domainName":"Colleges","propertyName":"studentFacultyRatio","propertyQuestion":"How do you feel about student faculty ratios?","displayorder":11,"propertyDisplayType":"radio"
+        }
+     ],
+     
+     "questionOptions":[
+        
+            {
+              "domainName": "Automobiles",
+              "propertyName": "age",
+              "propertyQuestion": "What age cars are you considering?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 1,
+              "allowedValue": ["Between 2 and 5 years old","Between 5 and 10 years old","Less than 2 years old","More than 10 years old"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "bodyStyle",
+              "propertyQuestion": "Which body styles are you considering?",
+              "propertyDisplayType": "multiselect",
+              "allowedDisplayOrder": 2,
+              "allowedValue": ["Convertible","Coupe", "Hatchback", "Sedan", "SUV", "Truck", "Van", "Wagon"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "color",
+              "propertyQuestion": "What exterior color do you prefer?",
+              "propertyDisplayType": "select",
+              "allowedDisplayOrder": 3,
+              "allowedValue": ["Beige", "Black", "Blue", "Brown", "Burgundy", "Charcoal", "Gold", "Gray", "Green", "Orange", "Pink", "Red"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "fuelType",
+              "propertyQuestion": "What fuel type do you prefer?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 4,
+              "allowedValue": ["Alternative", "Diesel", "Gasoline"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "luxurySeats",
+              "propertyQuestion": "Do you need Luxury Seats?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 5,
+              "allowedValue": ["No","Yes"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "make",
+              "propertyQuestion": "Which manufacturer are you considering?",
+              "propertyDisplayType": "multiselect",
+              "allowedDisplayOrder": 6,
+              "allowedValue": ["Acura","Audi", "Bentley", "BMW", "Ford", "Honda", "Hyundai", "Mazda", "Nissan", "Saab", "Toyota", "Volkswagen"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "mileage",
+              "propertyQuestion": "What mileage are you looking for?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 7,
+              "allowedValue": ["Less than 15,000", "Less than 30,000", "Less than 45,000", "Less than 60,000", "More than 60,000"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "priceRange",
+              "propertyQuestion": "What price range are you looking for?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 8,
+              "allowedValue": ["Between $12,000 and $18,000", "Between $18,000 and $30,000", "Less than $12,000", "More than $30,000"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "sellerType",
+              "propertyQuestion": "Which sellers do you prefer?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 9,
+              "allowedValue": ["Dealers","Private Seller"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "sunroof",
+              "propertyQuestion": "Do you need a Sunroof?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 10,
+              "allowedValue": ["No", "Yes"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "transmission",
+              "propertyQuestion": "What transmission do you prefer?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 11,
+              "allowedValue": ["Automatic", "Manual"]
+            },
+            {
+              "domainName": "Automobiles",
+              "propertyName": "usedOrNew",
+              "propertyQuestion": "Which cars are you interested in?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 12,
+              "allowedValue": ["Certified Cars", "New Cars", "Used Cars"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "collegeAge",
+              "propertyQuestion": "Is college age of any concern to you?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 1,
+              "allowedValue": ["Established over 50 yrs ago", "New College - establish in past 50 yrs", "Old school - Established over 100 yrs ago"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "collegeRanking",
+              "propertyQuestion": "What ranking of schools are you searching for?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 2,
+              "allowedValue": ["100-200", "20-50", "50-100", "Others","Top 20"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "collegeSize",
+              "propertyQuestion": "What size college are you interested in?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 3,
+              "allowedValue": ["Large (>20000 students)","Medium (5000-20000 students)", "Small (<5000 students)"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "collegeType",
+              "propertyQuestion": "What type of college are you interested in?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 4,
+              "allowedValue": ["Engineering", "Law", "Liberal Arts", "Medical"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "cost",
+              "propertyQuestion": "What tuitions are you comfortable with?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 5,
+              "allowedValue": ["Above $30000", "Upto $10000", "Upto $15000", "Upto $20000", "Upto $5000"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "focus",
+              "propertyQuestion": "Are you interested in schools with a specific focus?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 6,
+              "allowedValue": ["Men Only","Military","Religious","Women Only"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "publicOrPrivate",
+              "propertyQuestion": "Do you like to attend a public or private university?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 7,
+              "allowedValue": ["Private","Public"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "region",
+              "propertyQuestion": "What region of the country do you prefer?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 8,
+              "allowedValue": ["East","Midwest", "Southeast","West"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "SATAvg",
+              "propertyQuestion": "What SAT Average school are you looking for?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 9,
+              "allowedValue": ["1000-1200","1200-1400","800-1000","<800",">1400"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "setting",
+              "propertyQuestion": "In what kind of setting are you interested?",
+              "propertyDisplayType": "checkbox",
+              "allowedDisplayOrder": 10,
+              "allowedValue": ["Large City","Large Town", "Rural Area","Small City","Small Town"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "sportsTradition",
+              "propertyQuestion": "Is collegiate sports tradition of interest to you?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 11,
+              "allowedValue": ["Excellent (won major championships)","Good (competitive)", "Poor (not competitive)"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "state",
+              "propertyQuestion": "What state of the country do you prefer?",
+              "propertyDisplayType": "multiselect",
+              "allowedDisplayOrder": 12,
+              "allowedValue": ["Alabama","Arizona","California","Florida","Georgia", "Illinois","Indiana", "Iowa","Kansas","Kentucky", "Louisiana","Maryland","Michigan","Minnesota", "Missouri", "Nevada", "New Jersey","New Mexico",
+                "New York","North Carolina","Ohio","Pennsylvania","South Carolina","South Dakota","Tennessee","Texas", "Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
+            },
+            {
+              "domainName": "Colleges",
+              "propertyName": "studentFacultyRatio",
+              "propertyQuestion": "How do you feel about student faculty ratios?",
+              "propertyDisplayType": "radio",
+              "allowedDisplayOrder": 13,
+              "allowedValue": ["Larger classes (above 20:1)","Medium classes (10:1 to 20:1)","Small classes (under 10:1)"]
+            }
+           
+     ]
+
+
+}

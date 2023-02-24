@@ -1,0 +1,982 @@
+<html>
+    <title>DB Project</title>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            #unique{
+                cursor: pointer;
+            }
+            section{
+                border-top: 2px solid black;
+                color: darkblue;
+                border-bottom: 0.6px solid grey;
+            }
+            table, th, td {
+                border:1px solid black;
+              }
+            #questionsSection{
+                color: black;
+            }
+            #DB
+            {
+                display: flex;
+                justify-content: space-between;
+            }
+            section .header{
+                color: darkblue;
+                font-weight: 400;
+            }
+            #right_db
+            {
+                text-align: right;
+                color: darkblue;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+            }
+            .btn 
+            {
+                border: none;
+                color: darkblue;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            #DbUser
+            {
+                display: inline;
+            }
+            .flex-container {
+                display: flex;
+                flex-direction: row;
+              }
+              
+              .left {
+                width: 50%;
+                text-align: left;
+                color: darkblue;
+            }
+      
+            .right {
+                width: 50%;
+                text-align: right;
+            }
+            .left,.right
+            {
+                margin-top: 1%;
+            }
+            #Reset,#Next,#Previous,#Search,#bookInput,#Bookmark
+            {
+                margin-right: 1%;
+            }
+        </style>
+    </head>
+    <body>
+        <section id="DB">
+            <h1 class="header">MULTIDIMENSIONAL DATABASE SEARCH</h1>
+            <div id ="right_db">
+              
+            </div>
+        </section> 
+
+        <section>
+        <div class="flex-container">
+            <div class="left">
+                <form name='formId'>
+                    <select name="categories" id="categories">
+                        <option value="default">Select a Domain</option>
+                        <!--<option id="colleges">colleges</option>
+                        <option id="automobiles">automobiles</option>-->
+                    </select>
+                </form>
+                <p> SEARCH CRITERIA: </p>
+                <form id="questionsSection">
+
+                </form>  
+            </div>
+            <div class="right" id="hideBookmark">
+                <div id="addBook"><i>Bookmarks</i></div>
+            </div>
+        </div>
+
+        <div id="Questions">
+        <!--<button type="button" id="Reset">Reset</button>
+        <button type="button" id="Next">Next</button>
+        <button type="button" id="Previous">Previous</button>
+        <button type="button" id="Search">Search</button>-->
+
+            Bookmark Name: <input type="text" id="bookInput">
+
+        <button type="button"  id="Bookmark">Add Bookmark</button>
+        <div>
+        </section>
+        <section id="Results">
+            <p> RESULTS </p>
+            <table id = "searchTable" style="width:50%">
+               <!-- <tr>
+                  <td>Emil</td>
+                  <td>Tobias</td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>14</td>
+                </tr>-->
+              </table>
+        </section>
+       <!-- <section id="Tables">
+            <h1 class="header">Database Table</h1>
+            <div id="dvTableSection">
+                <div id="dvAppendTable"></div>
+                <div id="dvButton" style="display: none;">
+                <input id="btnGetSkeletons" type="button" value="Get Skeletons" title="Get Skeletons"/>
+                <input id="btnResetSkeletons" type="button" value="Reset Skeletons" title="Reset Skeletons"/>
+                </div>
+
+            </div>
+        </section>-->
+
+       
+    </body>
+    <script>
+         right_side = document.getElementById('right_db')
+        right_side.innerHTML += "<label id='userLabel'>userid</label><input type='text' id='DbUser' onkeypress='clickPress(event)'><p id='myName'></p>";
+        var disableInput = document.getElementById("bookInput");
+        var disableButton = document.getElementById("Bookmark");
+        disableInput.disabled = true;
+        disableButton.disabled = true;
+        var x = document.getElementById("DbUser");
+        var hideMark = document.getElementById('hideBookmark').style.display = 'block';
+        x.style.display = "inline";
+        document.getElementById("userLabel").style.display = "inline";
+        document.getElementById("myName").style.display = "none";
+        function clickPress(event) {
+            if (event.keyCode == 13) {
+                // do something
+                x.style.display = "none";
+                document.getElementById("userLabel").style.display = "none";
+                document.getElementById("myName").style.display = "block";
+                var disableInput = document.getElementById("bookInput");
+                console.log(disableInput);
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.disabled = false;
+                disableButton.disabled = false;
+                var y = document.getElementById('DbUser').value;
+                var str1 = "Welcome,  ";
+                var final_str = str1.concat(y)
+                document.getElementById("myName").textContent = final_str; 
+                //document.getElementById('finalQueSec').style.display = "none";
+            const gqlObjf = 
+            { query: `mutation{
+				createUser(userid:"${y}"){
+					userid
+                }
+				}`
+            };
+               
+
+            console.log(y)
+            fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObjf),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+            })
+            } 
+            const gqlObjb = 
+            {
+                query: `{ userbookmark(userid:"${y}"){
+                    bname 
+                    domainName
+                }  
+                    }`
+            };
+         
+            fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObjb),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(bookjson => {
+                console.log(bookjson);
+                console.log(bookjson['data'].userbookmark);
+                var myBookmark = bookjson['data'].userbookmark;
+                for (i = 0; i< myBookmark.length ; i++)
+                {
+                    console.log(myBookmark[i].bname);
+                    var pTag = document.createElement("p");  
+                    document.getElementById('addBook').appendChild(pTag);
+                    pTag.textContent = myBookmark[i].bname;
+                    pTag.innerHTML = "<p style='display: inline' id = "+(i+1)+ 'p' + "><h3 onclick='populateData("+(i+1)+")' id = "+myBookmark[i].domainName+" style='font-weight: normal;display: inline;font-size:15px'>"+myBookmark[i].bname+"</h3> <button class='btn' style='display: inline' onclick='deletefunc("+(i+1)+")' id='deleteBook'> <i class='fa fa-trash'></i></button></p>";
+                    pTag.setAttribute("id", "unique");
+                }
+            })
+        
+        
+
+        };
+        
+    
+         //document.getElementById('questionsSection').style.display = 'none';
+        // reading a JSon file 
+        
+        const gqlObj = 
+            {
+                query: `{ domain{domainName 
+                }  
+                    }`
+            }; 
+
+        var domainUrl = "http://127.0.0.1:5000/graphql/?";
+        fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObj),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(response => response.json())
+        .then(domainJsonData => {
+            console.log(domainJsonData)
+        console.log(domainJsonData['data'].domain);
+
+       var dData = domainJsonData['data'].domain
+       for (let i = 0; i < dData.length; i++) {
+
+        selectedValue(dData[i].domainName);
+
+        }
+        // Do stuff with the contents of the JSON file here
+
+        // Adding Domains data
+       /* for (let i = 0; i < json.length; i++) {
+                //categories
+            // Print the current element
+            var node = document.createElement("option");
+            document.getElementById('categories').appendChild(node);
+            node.setAttribute("id",json[i].domainName );
+            node.textContent = json[i].domainName;
+            node.setAttribute("value",json[i].domainName );
+            console.log(json[i].domainName);
+        }*/
+    });
+
+   /* function getSelectedEle(ele)
+    {
+        console.log('hloo')
+        console.log(ele)
+    }*/
+    /*const gqlObj1 = 
+            {
+                query: `{ property{domainName ,propertyName, propertyQuestion, displayorder, propertyDisplayType}
+                    }`
+            }; 
+    var select = document.querySelector('#categories')
+        select.addEventListener('change',()=>{
+           // console.log(select.value);
+           fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObj1),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(res => res.json())
+            .then(json => {
+            document.getElementById('questionsSection').innerHTML = "";
+            getQuestion(select.value, json[0].allowedDisplayOrder, json);
+        });
+        })*/
+        const gqlObj2 = 
+            {
+                query: `{ propertyDetail1{domainName ,propertyName, propertyQuestion, propertyDisplayType,displayOrder,displayOrder
+                    allowedValueCode,allowedValue}}`
+            }; 
+            var select = document.querySelector('#categories')
+        select.addEventListener('change',()=>{
+           // console.log(select.value);
+           fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObj2),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(res => res.json())
+            .then(json => {
+                var queData = json['data'].propertyDetail1
+                console.log(queData)
+            document.getElementById('questionsSection').innerHTML = "";
+            if (select.value === 'default'){
+                document.getElementById('questionsSection').innerHTML = " ";
+            }
+            else{            getQuestion(select.value, queData[0].displayOrder, queData);
+                document.getElementById('Questions').style.display = "block";
+            }
+        });
+        })
+    function selectedValue(domainName)
+    {
+        var node = document.getElementById('categories');
+        node.innerHTML += "<option value="+domainName+">"+domainName+"</option>";
+    }
+
+    function getQuestion(selectValue,displayOrder,questionJson)
+    {
+         var count = 0
+        var que = document.getElementById('questionsSection')
+        for (let j = 0; j < questionJson.length; j++) {
+            if (selectValue === questionJson[j].domainName)
+            {
+                count+=1
+                console.log(questionJson[j].domainName)
+                //var que = document.getElementById('questionsSection')
+                que.innerHTML += "<p id = "+questionJson[j].propertyName+">"+questionJson[j].displayOrder+". "+questionJson[j].propertyQuestion+"</p>";
+                if (questionJson[j].propertyDisplayType === 'multiselect')
+                {
+                    var content = "<form name='formid'> <select id = "+j+questionJson[j].propertyName+" multiple>";
+                    //content += "<select id = "+propertyName+" multiple>";
+                }
+                 if (questionJson[j].propertyDisplayType === 'select')
+                {
+                    var content = "<form name='formid'> <select id = "+j+questionJson[j].propertyName+">";
+                }
+
+                var myArray = questionJson[j].allowedValue.split("*");
+                var arrayCode = questionJson[j].allowedValueCode.split("*");
+                for (let i = 0; i < myArray.length; i++) {
+                    if (questionJson[j].propertyDisplayType === 'radio'){
+                        que.innerHTML += "<input type='radio' id="+arrayCode[i]+" name="+questionJson[j].propertyName+" value="+myArray[i]+"> <label for="+myArray[i]+">"+myArray[i]+"</label><br>"
+                    }
+                    if (questionJson[j].propertyDisplayType === 'checkbox')
+                    {
+                        que.innerHTML += "<input type='checkbox' id="+arrayCode[i]+" name="+questionJson[j].propertyName+" value="+myArray[i]+"> <label for="+i+">"+myArray[i]+"</label><br>"
+                    }
+                    if (questionJson[j].propertyDisplayType === 'multiselect' || questionJson[j].propertyDisplayType === 'select')
+                    {
+                        content += "<option id="+arrayCode[i]+" value="+myArray[i]+"> "+myArray[i]+" </option><br>"
+                    }
+                }
+                if (questionJson[j].propertyDisplayType === 'multiselect' ||questionJson[j].propertyDisplayType === 'select')
+                {
+                    content += "</select></form>";
+                    que.innerHTML += content;
+                }    }
+    }
+    que.innerHTML += "<button type='button' id='Reset'>Reset</button><button type='button' onclick = 'nextButton()' id='Next'>Next</button><button type='button' onclick = 'prevButton()' id='Previous'>Previous</button><button type='button' id='Search'>Search</button>"
+    var bookmarkbtn = document.getElementById('Bookmark');
+    bookmarkbtn.addEventListener('click', bookMark);
+
+    function bookMark()
+    {
+        bookMarkList = [];
+        var parent = document.getElementById('addBook');
+        var children = parent.childNodes;
+        x_len = children.length
+        console.log(x_len)
+        if (x_len < 6){
+            var myBook = document.getElementById('bookInput').value;
+            var pTag = document.createElement("p");  
+            document.getElementById('addBook').appendChild(pTag);
+            pTag.textContent = myBook
+            pTag.innerHTML = "<p style='display: inline' id = "+x_len+ 'p' +"><h3 id = "+x_len+ 'pm' +" onclick='populateData("+(i+1)+")' style='font-weight: normal;display: inline;font-size:15px'>"+myBook+"</h3> <button class='btn' style='display: inline' onclick='deletefunc("+x_len+ ")' id='deleteBook'> <i class='fa fa-trash'></i></button></p>";
+            
+            var heading = document.getElementById("heading");
+            pTag.setAttribute("id", "unique");
+            console.log(document.getElementById('deleteBook').parentElement);
+            if( x_len == 5)
+            {
+                var disableInput = document.getElementById("bookInput");
+           var disableButton = document.getElementById("Bookmark");
+            disableInput.disabled=true;
+            disableButton.disabled=true;
+            }
+        }
+        else
+        {
+            var disableInput = document.getElementById("bookInput");
+           var disableButton = document.getElementById("Bookmark");
+            disableInput.disabled=true;
+            disableButton.disabled=true;
+        }
+
+        var Bname = document.getElementById('DbUser').value;
+        var selectt = document.querySelector('#categories')
+        console.log(Bname);
+        bookMarkList.push(Bname);
+        console.log(selectt.value);
+        bookMarkList.push(selectt.value);
+        console.log(myBook);
+        bookMarkList.push(myBook);
+
+        count = 0
+        var searchJson = {};
+        //var acode = [];
+        for (let j = 0; j < questionJson.length; j++) 
+        {
+            //console.log(j)
+            
+            //console.log(selectValue)
+            //console.log(select.value)
+           
+            if (selectValue === questionJson[j].domainName)
+            {
+                //console.log(questionJson[j].propertyName)
+                //searchProperty.push(questionJson[j].propertyName);
+                count += 1
+                //console.log('hloo from search')
+                /*var email = document.querySelector("[name="+questionJson[j].propertyName+"]");
+                console.log(email)
+                console.log(email.getAttribute('id'));*/
+                if (questionJson[j].propertyDisplayType === 'radio')
+                {
+                var ele = document.getElementsByName(questionJson[j].propertyName);
+                count = 0
+                for(i = 0; i < ele.length; i++) {
+                    if(ele[i].checked){
+                        count += 1;
+                    //console.log(ele[i].id);
+                    searchJson[questionJson[j].propertyName] = ele[i].id;
+                    //acode.push(ele[i].id)
+                    }
+                    }
+                if (count == 0){
+                    //acode.push(-1);
+                    searchJson[questionJson[j].propertyName] = -1;
+                }
+                }
+                if (questionJson[j].propertyDisplayType === 'checkbox')
+                {
+                    var result = []
+                    var ele = document.getElementsByName(questionJson[j].propertyName);
+                    let checkedValues = [];
+                    ele.forEach((checkbox) => {
+                        if (checkbox.checked){
+                        checkedValues.push(checkbox.id);
+                        
+                    }
+                    });
+                    /*for (var i = 0; i < ele.length; i++) {
+                        if ( ele[i].checked) {
+                            result[i] = ele[i].id
+                        }
+                    }*/
+                    //console.log(checkedValues)
+                    //acode.push(checkedValues);
+                    searchJson[questionJson[j].propertyName] = checkedValues;
+                }
+                if(questionJson[j].propertyDisplayType === 'select')
+                {
+                    var select = document.getElementById(j+questionJson[j].propertyName);
+                    //console.log(select);
+                    var options = select.options;
+                    var id = options[options.selectedIndex].id;
+                    //console.log(id);
+                    if (id){
+                        //acode.push(id);
+                        searchJson[questionJson[j].propertyName] = id;
+                    }
+                    else{
+                        //acode.push(-1);
+                        searchJson[questionJson[j].propertyName] = -1;
+                    }
+                }
+                if (questionJson[j].propertyDisplayType === 'multiselect')
+                {
+                    var selectMulti = document.getElementById(j+questionJson[j].propertyName);
+                    //var options = select.options;
+                    const selectedValues = [].filter
+                    .call(selectMulti.options, option => option.selected)
+                    .map(option => option.id);
+                    //console.log(selectedValues);
+                    //acode.push(selectedValues);
+                    searchJson[questionJson[j].propertyName] = selectedValues;
+                    /*for (i=0; i < options.length; i++)
+                    {
+                        var id = options[i.selectedIndex];
+                        console.log(id);
+                    }*/
+                }
+                //searchId.push(acode);
+            }
+        }
+        //searchJson.push(searchProperty,acode)
+        bookMarkList.push(searchJson);
+        console.log(bookMarkList);
+        myData = bookMarkList[3]
+        var a = "";
+        for (const key in myData)
+        {
+            if(Array.isArray(myData[key]) && myData[key].length!=0)
+            {
+                a=a+key+"=["
+            for (index = 0; index < myData[key].length; index++)
+            {
+            a=a+myData[key][index]+","
+            console.log(myData[key])
+            }
+            a=a+"]"
+            a = a.slice(0, a.length-2) + a.slice(a.length-1);
+            a=a+","
+            }
+
+           else if ( myData[key]!=-1 && !Array.isArray(myData[key]))
+           {
+           
+           a=a+key+"="+bookMarkList[3][key]
+           a=a+","
+           }
+          
+        }
+        a = a.slice(0, a.length-1) + a.slice(a.length);
+        console.log(a)
+        console.log(bookMarkList[0])
+        /*const gqlObjf = 
+            { query: `mutation{
+				createUser(userid:"${y}"){
+					userid
+                }
+				}`
+            };*/
+        var gqlObj5 = 
+            {
+                query: `mutation{ createUserbookmark(userid:"${bookMarkList[0]}",domainName:"${bookMarkList[1]}",bname:"${bookMarkList[2]}",bookmark:"${a}"
+       ){
+        userid
+        domainName
+        bname
+        bookmark
+       }}`
+            }; 
+            fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObj5),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+            })
+            }
+         
+       
+    var resetbtn = document.getElementById('Reset');
+    resetbtn.addEventListener('click', resetButton);
+
+    function resetButton()
+    {
+        document.getElementById("questionsSection").reset();
+    }
+    var searchbtn = document.getElementById('Search');
+    searchbtn.addEventListener('click', searchButton);
+
+    function searchButton()
+        {
+            count = 0
+            var searchJson = {};
+            //var acode = [];
+            for (let j = 0; j < questionJson.length; j++) 
+            {
+                //console.log(j)
+                
+                //console.log(selectValue)
+                //console.log(select.value)
+
+            if (selectValue === questionJson[j].domainName)
+                {
+                    //console.log(questionJson[j].propertyName)
+                    //searchProperty.push(questionJson[j].propertyName);
+                    count += 1
+                    //console.log('hloo from search')
+                    /*var email = document.querySelector("[name="+questionJson[j].propertyName+"]");
+                    console.log(email)
+                    console.log(email.getAttribute('id'));*/
+                    if (questionJson[j].propertyDisplayType === 'radio')
+                    {
+                    var ele = document.getElementsByName(questionJson[j].propertyName);
+                    count = 0
+                    for(i = 0; i < ele.length; i++) {
+                        if(ele[i].checked){
+                            count += 1;
+                        //console.log(ele[i].id);
+                        searchJson[questionJson[j].propertyName] = ele[i].id;
+                        //acode.push(ele[i].id)
+                        }
+                        }
+                    if (count == 0){
+                        //acode.push(-1);
+                        searchJson[questionJson[j].propertyName] = -1;
+                    }
+                    }
+                    if (questionJson[j].propertyDisplayType === 'checkbox')
+                    {
+                        var result = []
+                        var ele = document.getElementsByName(questionJson[j].propertyName);
+                        let checkedValues = [];
+                        ele.forEach((checkbox) => {
+                            if (checkbox.checked){
+                            checkedValues.push(checkbox.id);
+                            
+                        }
+                        });
+                        searchJson[questionJson[j].propertyName] = checkedValues;
+                    }
+                    if(questionJson[j].propertyDisplayType === 'select')
+                    {
+                        var select = document.getElementById(j+questionJson[j].propertyName);
+                        //console.log(select);
+                        var options = select.options;
+                        var id = options[options.selectedIndex].id;
+                        //console.log(id);
+                        if (id){
+                            //acode.push(id);
+                            searchJson[questionJson[j].propertyName] = id;
+                        }
+                        else{
+                            //acode.push(-1);
+                            searchJson[questionJson[j].propertyName] = -1;
+                        }
+                    }
+                    if (questionJson[j].propertyDisplayType === 'multiselect')
+                    {
+                        var select = document.getElementById(j+questionJson[j].propertyName);
+                        //var options = select.options;
+                        const selectedValues = [].filter
+                        .call(select.options, option => option.selected)
+                        .map(option => option.id);
+                        //console.log(selectedValues);
+                        //acode.push(selectedValues);
+                        searchJson[questionJson[j].propertyName] = selectedValues;
+                        /*for (i=0; i < options.length; i++)
+                        {
+                            var id = options[i.selectedIndex];
+                            console.log(id);
+                        }*/
+                    }
+                    //searchId.push(acode);
+                }
+            }
+            //searchJson.push(searchProperty,acode)
+            console.log(searchJson)
+            console.log(searchJson.color)
+            console.log(searchJson['bodyStyle'])
+            var a= searchJson['color']
+            
+            if(selectValue=='Automobiles')
+            {
+
+            var gqlObj3 = 
+            {
+                query: `{ autofacttable(color: ${searchJson.color},age:${searchJson.age},fuelType:[${searchJson.fuelType}],make:[${searchJson.make}],bodyStyle:[${searchJson.bodyStyle}],luxurySeats:${searchJson.luxurySeats},mileage:${searchJson.mileage},priceRange:${searchJson.priceRange},sellerType:${searchJson.sellerType},sunroof:${searchJson.sunroof},transmission:${searchJson.transmission},usedOrNew:[${searchJson.usedOrNew}]
+       ){
+        autoId
+        url
+       }}`
+            }; 
+        }
+        else{
+            var gqlObj3 = 
+            {
+                query: `{ collegefacttable(publicOrPrivate: ${searchJson.publicOrPrivate},region:[${searchJson.region}],state:[${searchJson.state}],focus:[${searchJson.focus}],collegeType:[${searchJson.collegeType}],setting:[${searchJson.setting}],collegeSize:${searchJson.collegeSize},SATAvg:${searchJson.SATAvg},collegeRanking:${searchJson.collegeRanking},sportsTradition:${searchJson.sportsTradition},studentFacultyRatio:${searchJson.studentFacultyRatio},cost:${searchJson.cost},collegeAge:${searchJson.collegeAge}
+       ){
+        name
+        url
+       }}`
+            }; 
+
+        }
+           // var select = document.querySelector('#categories')
+           // console.log(select.value);
+           fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObj3),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }) 
+            .then(res => res.json())
+      
+                .then(resjson => {
+                
+                console.log(resjson)
+                if(selectValue=='Automobiles')
+                {
+                    var searchArray = resjson['data'].autofacttable;
+                    //console.log(searchArray);
+                }
+                else
+                {
+                    var searchArray = resjson['data'].collegefacttable;
+                    //console.log(searchArray);
+                }
+
+               if (searchArray.length > 0)
+        {
+        var listTable = []
+        for (k = 0; k < searchArray.length ; k++){
+            for (const key in searchArray[k]) {
+                if (searchArray[k].hasOwnProperty(key)) {
+                    if (k == 0)
+                    {
+                        listTable.push(key)
+                }
+                searchData += "<tr><td>"+key+"</td><td>"+searchArray[k][key]+"</td></tr>";
+          }
+        }
+    }
+            firstAttr = listTable[0]
+            secondAttr = listTable[1]
+            var searchData = "<tr><td>"+firstAttr+"</td><td>"+secondAttr+"</td></tr>";
+            for (k = 0; k < searchArray.length ; k++)
+            {
+                searchData += "<tr><td>"+searchArray[k][firstAttr]+"</td><td>"+searchArray[k][secondAttr]+"</td></tr>";
+            }
+            document.getElementById('searchTable').innerHTML = searchData;
+        }
+        else{
+            document.getElementById('searchTable').innerHTML = "No records are available for this search";
+        }
+        });
+            
+                    }
+                }
+        //var searchbtn = document.getElementById('Search');
+        //searchbtn.addEventListener('click', searchButton);
+        
+        
+       /* function getQuestions(selectValue, domainName, propertyName, propertyQuestion, propertyDisplayType, allowedValue, allowedDisplayOrder)
+        {
+            console.log(propertyDisplayType);
+            console.log(allowedValue);
+            if (selectValue === domainName)
+            {
+                console.log(domainName)
+                var que = document.getElementById('questionsSection')
+                que.innerHTML += "<p id = "+propertyName+">"+allowedDisplayOrder+". "+propertyQuestion+"</p>";
+                if (propertyDisplayType === 'multiselect' || propertyDisplayType === 'select')
+                {
+                    var content = "<form name='formid'> <select id = "+propertyName+" multiple>";
+                    //content += "<select id = "+propertyName+" multiple>";
+                }
+                for (let i = 0; i < allowedValue.length; i++) {
+                    if (propertyDisplayType === 'radio'){
+                        que.innerHTML += "<input type='radio' id="+i+" name="+propertyName+" value="+allowedValue[i]+"> <label for="+allowedValue[i]+">"+allowedValue[i]+"</label><br>"
+                    }
+                    if (propertyDisplayType === 'checkbox')
+                    {
+                        que.innerHTML += "<input type='checkbox' id="+i+" name="+i+" value="+allowedValue[i]+"> <label for="+i+">"+allowedValue[i]+"</label><br>"
+                    }
+                    if (propertyDisplayType === 'multiselect' || propertyDisplayType === 'select')
+                    {
+                        content += "<option value="+allowedValue[i]+"> "+allowedValue[i]+" </option><br>"
+                    }
+                }
+                if (propertyDisplayType === 'multiselect' || propertyDisplayType === 'select')
+                {
+                    content += "</select></form>";
+                    que.innerHTML += content;
+                }
+            }     
+        }*/
+
+      /*  var hideMark = document.getElementById('hideBookmark').style.display = 'none';
+        var disableInput = document.getElementById("bookInput");
+        var disableButton = document.getElementById("Bookmark");
+        disableInput.setAttribute("style", "pointer-events:none");
+        disableButton.setAttribute("style", "pointer-events:none");
+
+        // Function to hide name and data based on click
+        function hide() {
+            var x = document.getElementById("DbUser");
+            var hideMark = document.getElementById('hideBookmark').style.display = 'block';
+            if (x.style.display === "none") {
+                x.style.display = "inline";
+                document.getElementById("userLabel").style.display = "inline";
+                document.getElementById("myName").style.display = "none";
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.setAttribute("style", "pointer-events:none");
+                disableButton.setAttribute("style", "pointer-events:none");
+            } else {
+                x.style.display = "none";
+                document.getElementById("userLabel").style.display = "none";
+                document.getElementById("myName").style.display = "block";
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.setAttribute("style", "pointer-events:auto");
+                disableButton.setAttribute("style", "pointer-events:auto");
+                var y = document.getElementById('DbUser').value;
+                var str1 = "Welcome,  ";
+                var final_str = str1.concat(y)
+                document.getElementById("myName").textContent = final_str;  
+            }
+          }
+
+        // Delete function and update the count of bookmarks
+        
+        function deletefunc(ele)
+        {
+            console.log(ele)
+            console.log(document.getElementById(ele).parentElement.remove())
+            //ele.remove();
+            var parent = document.getElementById('addBook');
+            var children = parent.childNodes;
+            x_len = children.length
+            if (x_len < 6){
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.setAttribute("style", "pointer-events:auto");
+                disableButton.setAttribute("style", "pointer-events:auto");
+            }
+            else{
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.setAttribute("style", "pointer-events:none");
+                disableButton.setAttribute("style", "pointer-events:none");
+            }
+        }
+
+        // adding book marks
+        function bookMark()
+        {
+            var parent = document.getElementById('addBook');
+            var children = parent.childNodes;
+            x_len = children.length
+            if (x_len < 6){
+                var myBook = document.getElementById('bookInput').value;
+                var pTag = document.createElement("p");  
+                document.getElementById('addBook').appendChild(pTag);
+                //pTag.textContent = myBook
+                pTag.innerHTML = "<p style='display: inline' id = "+x_len+"><h3 style='font-weight: normal;display: inline;font-size:15px'>"+myBook+"</h3> <button class='btn' style='display: inline' onclick='deletefunc("+x_len+")' id='deleteBook'> <i class='fa fa-trash'></i></button></p>";
+                
+                //var heading = document.getElementById("heading");
+                //pTag.setAttribute("id", "unique");
+                //console.log(document.getElementById('deleteBook').parentElement);
+            }
+            else
+            {
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.setAttribute("style", "pointer-events:none");
+                disableButton.setAttribute("style", "pointer-events:none");
+            }
+        }*/
+        function deletefunc(ele)
+        {
+            deleteArray = []
+            ele = ele + 'p'
+            console.log(ele);
+            console.log("bname, domainname, userid");
+            // bname
+            var displayName = document.getElementById(ele).nextSibling.textContent;
+            deleteArray.push(displayName);
+            // userid
+            var userName = document.getElementById('DbUser').value;
+            deleteArray.push(userName);
+            // select
+            var selectName = document.getElementById(ele).nextSibling.id;
+            deleteArray.push(selectName);
+            console.log(deleteArray);
+
+            const gqlObjd = 
+            { query: `mutation{
+				deleteUserbookmark(userid:"${deleteArray[1]}",bname:"${deleteArray[0]}",domainName:"${deleteArray[2]}"){
+					userid
+                    bname
+                    domainName
+                }
+				}`
+            };
+               
+
+            
+            fetch('http://127.0.0.1:5000/graphql/?',
+            {
+                method: 'POST',
+                mode: 'cors',
+                body : JSON.stringify(gqlObjd),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+            })
+
+            document.getElementById(ele).parentElement.remove();
+            //ele.remove();
+            var parent = document.getElementById('addBook');
+            var children = parent.childNodes;
+            x_len = children.length
+            if (x_len < 6){
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.disabled=false;
+                disableButton.disabled=false;
+  
+            }
+            else{
+                var disableInput = document.getElementById("bookInput");
+                var disableButton = document.getElementById("Bookmark");
+                disableInput.disabled=true;
+                disableButton.disabled=true;
+            }
+            
+
+        } 
+        
+        function populateData(ele)
+        {
+            console.log(ele);
+            ele = ele + 'p'
+            console.log(ele);
+            populateArray = []
+            var displayName = document.getElementById(ele).nextSibling.textContent;
+            populateArray.push(displayName);
+            // userid
+            var userName = document.getElementById('DbUser').value;
+            populateArray.push(userName);
+            // select
+            var selectName = document.getElementById(ele).nextSibling.id;
+            populateArray.push(selectName);
+            console.log(populateArray);
+            
+        }
+
+
+        document.getElementById('Questions').style.display = "none";
+       
+    </script>
+</html>
